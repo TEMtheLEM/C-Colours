@@ -23,7 +23,7 @@ char *RainbowString(const char *str, const char bold) {
 	     // colour step: starts at red (1), ends at cyan (6) in the loop
 	     s = 1,
 	     // bright step: always swaps between 0 and 6 every iteration
-	     //    6 because we add b to 3 each iteration to get both 3#m (dim) or 9#m (bright)
+	     //    6 because we add b to 3 each odd iteration to get either 3#m (dim) or 9#m (bright)
 	     b = 0;
 
 	// keeps constant track of size of the string (in bytes)
