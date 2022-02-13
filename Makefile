@@ -17,11 +17,13 @@ help:
 	#                  Use when you're developing software.
 	#   release:   Compile release libraries  (Optimizations to the max, no debuggable symbols)
 	#                  Use this when you're ready to create a final binary.
+	#   valgrind:  Run test application under valgrind to look for memory errors/leaks.
 	#
 	# This software is licensed under the MPLv2; see LICENSE for details on how you can use it.
 	# See COPYRIGHT for, well, copyrights
 
 
+# Compile & run test application (src/main.c).
 test:
 	$(CC) $(CFLAGS) $(CWARNS) -g src/main.c -o bin/test -Llib/ -lcolours
 	bin/test
@@ -39,3 +41,8 @@ debug:
 	$(CC) $(CFLAGS) $(CWARNS) -g -c src/colours.c
 	mv *.o obj/
 	ar rcs lib/libcolours.a obj/colours.o
+
+
+# Run the test application under valgrind to test memory.
+valgrind:
+	valgrind bin/test
