@@ -1,7 +1,7 @@
-CC=ccache clang
+CC=ccache gcc
 CFLAGS=-std=c17
 OPTI=-O3 -Os
-CWARNS=-Wall -Werror
+CWARNS=-Wextra -Werror
 
 # uncomment this to suppress additional warnings (do NOT do this for a release)
 #CWARNS=
@@ -25,24 +25,19 @@ help:
 
 # Compile & run test application (src/main.c).
 test:
-	$(CC) $(CFLAGS) $(CWARNS) -g src/main.c -o bin/test -Llib/ -lcolours
+	$(CC) $(CFLAGS) $(CWARNS) -O1 -fsanitize=address -g -fPIE src/main.c -o bin/test -Llib/ -lcolours
 	bin/test
 
 
 # Use this for creating release libraries...
 release:
-	$(CC) $(CFLAGS) $(CWARNS) $(OPTI) -c src/colours.c
+	$(CC) $(CFLAGS) $(CWARNS) $(OPTI) -fPIE -c src/colours.c
 	mv *.o obj/
 	ar rcs lib/libcolours.a obj/colours.o
 
 
 # ...and debug libraries
 debug:
-	$(CC) $(CFLAGS) $(CWARNS) -g -c src/colours.c
+	$(CC) $(CFLAGS) $(CWARNS) -O1 -fsanitize=address -g -fPIE -c src/colours.c
 	mv *.o obj/
 	ar rcs lib/libcolours.a obj/colours.o
-
-
-# Run the test application under valgrind to test memory.
-valgrind:
-	valgrind bin/test
