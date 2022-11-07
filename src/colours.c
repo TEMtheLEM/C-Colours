@@ -29,7 +29,7 @@ char *RainbowString(const char *str, const char bold) {
 	// keeps constant track of size of the string (in bytes)
 	size_t size = 0;
 
-	for (int i = 0; i < strlen(str); i++) {
+	for (int i = 0; i < (int) strlen(str); i++) {
 		if (str[i] == ' ') {
 			// only allocate 1 extra byte for a space,
 			// then move on without colouring the space
